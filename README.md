@@ -26,8 +26,10 @@ If you're not running `statsd` at the default configuration (localhost/8125), yo
 an initializer:
 
     $ rails g vitals
-or
+or  
     $ rails g vitals --statsd-host=<YOURHOST> --port=<PORT>
+    
+
 
 
 
