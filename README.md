@@ -1,7 +1,10 @@
 # Vitals
 
 Vitals is a very simple rails 3 plugin which exposes `ActiveSupport` `Notification`s
-back to `statsd`.
+back to [`statsd`](https://github.com/etsy/statsd).  
+
+If you want to quickly build a statsd stack, check out [statsd-stack](https://github.com/jondot/statsd-stack) which
+is based on [Sprinkle](http://github.com/crafterm/sprinkle/). 
 
 ## Goals
 
