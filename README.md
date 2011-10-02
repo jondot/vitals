@@ -27,6 +27,7 @@ an initializer:
 
     $ rails g vitals
 or  
+    
     $ rails g vitals --statsd-host=<YOURHOST> --port=<PORT>
     
 
