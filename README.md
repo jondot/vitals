@@ -1,8 +1,8 @@
 # Vitals
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/vitals`. To experiment with that code, run `bin/console` for an interactive prompt.
+Vitals is the one stop shop to doing metrics in Ruby. It currently support Rails,
+Rack (Sinatra and any Rack-supported frameworks), and Grape.
 
-TODO: Delete this and the text above, and describe your gem
 
 ## Installation
 
@@ -22,31 +22,104 @@ Or install it yourself as:
 
 ## Usage
 
+### Rails or Grape
+
+Make an `initializers/vitals.rb` initializer, and cofigure Vitals as you'd like:
+```ruby
+require 'vitals'
+Vitals.configure! do |c|
+  c.facility = 'my_service'
+  c.reporter = Vitals::Reporters::StatsdReporter.new(host: 'statsd-host', port: 8125)
+end
+
+#
+# Rails
+#
+require 'vitals/integrations/notifications/action_controller'
+Vitals::Integrations::Notifications::ActionController.subscribe!
+
+# if you also want ActiveJob metrics
+require 'vitals/integrations/notifications/action_job'
+Vitals::Integrations::Notifications::ActiveJob.subscribe!
 
 
+#
+# Grape
+#
+require 'vitals/integrations/notifications/grape'
+Vitals::Integrations::Notifications::Grapej.subscribe!
+```
 
+### Rack
 
+Here, you can use the `Requests` middleware. Here is a sample Sinatra app:
 
+```ruby
+require 'vitals'
+require 'vitals/integrations/rack/requests'
 
+class SinatraTestAPI < Sinatra::Base
+  use Vitals::Integrations::Rack::Requests
 
+  get '/foo/bar/baz' do
+    sleep 0.1
+    "hello get"
+  end
 
+  post '/foo/bar/:name' do
+    sleep 0.1
+    "hello post"
+  end
+end
+```
 
+### Configuration Options
 
+The Vitals API is extensible. It should resemble the standard `Logger` look and feel,
+and it revolves around 3 concepts:
+
+1. `Reporter` - the thing that takes your metrics and flushes them to a metrics agent. Use `StatsdReporter` in production
+and `ConsoleReporter` in development. `ConsoleReporter` will spit out metrics to `stdout` as they come. You can also
+wire them _both_ with `MultiReporter`. Check the [specs](/spec/reporters) for how to do that.
+2. `Format` - takes the contextual information (host, service, environment) and your metric, and formats them in an
+order that makes sense for working with Graphite. You have the `ProductionFormat` and `HostLastFormat`.
+3. `Integrations` - integrations hook things that we're able to instrument with Vitals. Check [integrations](/lib/vitals/integrations) for more.
+
+Here's what's available to you at configuration time:
+
+```ruby
+Vitals.configure! do |c|
+  # Set your service name (default: 'default')
+  c.facility = 'my_service'
+
+  # Set environment (default: taken from RACK_ENV)
+  # c.environment = 'env'
+
+  # Set a host (default: taken from hostname)
+  # c.host = 'foohost'
+
+  # Use a specific reporter (default: InmemReporter)
+  # c.reporter = Vitals::Reporters::ConsoleReporter.new
+
+  # Use a different format perhaps? (default: ProductionFormat)
+  # c.format = Vitals::Formats::HostLastFormat
+end
+```
 
 
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+Tests and benchmarks should be run with at least Ruby 2.1 (because of memory profiling API)
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```
+$ bundle install && rake spec && rake bench
+```
 
-## Contributing
+# Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/vitals.
+Fork, implement, add tests, pull request, get my everlasting thanks and a respectable place here :).
 
+# Copyright
 
-## License
-
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
+Copyright (c) 2011-2016 [Dotan Nahum](http://gplus.to/dotan) [@jondot](http://twitter.com/jondot). See [LICENSE](LICENSE.txt) for further details.
