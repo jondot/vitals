@@ -73,6 +73,26 @@ class SinatraTestAPI < Sinatra::Base
 end
 ```
 
+### Ruby
+
+You can emit metrics from anywhere:
+
+```ruby
+Vitals.inc('my_metric')
+
+Vitals.gauge('my_metric', 42)
+
+Vitals.timing('my_metric', 500) # milliseconds
+
+Vitals.time('my_metric'){
+ # so something slow
+}
+
+# Use a dot to logically separate segments
+
+Vitals.timing('category.my_metric', 500) # milliseconds
+```
+
 ### Configuration Options
 
 The Vitals API is extensible. It should resemble the standard `Logger` look and feel,
