@@ -5,7 +5,9 @@ rvm:
   - 2.2.0
   - 2.3.0
   - ruby-head
-before_install: gem install bundler -v 1.11.2
+# use latest bundler because of ruby-head exposing a bundler bug.
+# see https://github.com/bundler/bundler/pull/3559
+before_install: gem install bundler
 matrix:
   include:
     - rvm: 2.3.0
