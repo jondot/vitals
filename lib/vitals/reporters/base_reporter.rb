@@ -3,8 +3,7 @@ module Vitals::Reporters
     def time(m)
       start = Time.now
       yield
-      # TODO multiply duration with time unit (msecs?) and round it
-      timing(m, Time.now - start)
+      timing(m, Vitals::Utils::sec_to_ms(Time.now - start))
     end
   end
 end

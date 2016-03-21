@@ -8,5 +8,8 @@ module Vitals
     def self.hostname
       `hostname -s`.chomp
     end
+    def self.sec_to_ms(sec)
+      (1000.0 * sec).round
+    end
   end
 end

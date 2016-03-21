@@ -13,7 +13,7 @@ module Vitals::Integrations::Notifications
     end
 
     def self.duration(started, finished)
-      1000.0 * (finished - started)
+      Vitals::Utils.sec_to_ms(finished - started)
     end
   end
 end

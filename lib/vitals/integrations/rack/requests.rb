@@ -14,7 +14,7 @@ module Vitals::Integrations::Rack
 
       # TODO add option to customize 'requests' through options
       m = "requests.#{env[PATH_INFO]}.#{env[REQUEST_METHOD].downcase}.#{status}"
-      Vitals.timing(m, (Time.now - start) * 1000)
+      Vitals.timing(m, Vitals::Utils.sec_to_ms(Time.now - start))
 
       [status, header, body]
     end
