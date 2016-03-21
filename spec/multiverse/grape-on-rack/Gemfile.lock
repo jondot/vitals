@@ -1,34 +1,44 @@
 PATH
-  remote: .
+  remote: ../../../
   specs:
     vitals (0.3.0)
       statsd-ruby (~> 1.3.0)
 
 GEM
-  remote: https://rubygems.org/
+  remote: http://rubygems.org/
   specs:
-    activesupport (4.2.6)
+    activesupport (4.2.5.1)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    addressable (2.4.0)
     ast (2.2.0)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
-    benchmark-ips (2.5.0)
     builder (3.2.2)
-    coderay (1.1.1)
+    capybara (2.6.2)
+      addressable
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      xpath (~> 2.0)
+    childprocess (0.5.9)
+      ffi (~> 1.0, >= 1.0.11)
+    coderay (1.1.0)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
+    diff-lcs (1.2.5)
     equalizer (0.0.11)
     ffi (1.9.10)
     formatador (0.2.5)
-    grape (0.15.0)
+    grape (0.14.0)
       activesupport
       builder
       hashie (>= 2.1.0)
@@ -38,6 +48,12 @@ GEM
       rack-accept
       rack-mount
       virtus (>= 1.0.0)
+    grape-entity (0.4.8)
+      activesupport
+      multi_json (>= 1.3.2)
+    grape-swagger (0.10.4)
+      grape (>= 0.8.0)
+      grape-entity (< 0.5.0)
     guard (2.13.0)
       formatador (>= 0.2.4)
       listen (>= 2.7, <= 4.0)
@@ -47,31 +63,39 @@ GEM
       pry (>= 0.9.12)
       shellany (~> 0.0)
       thor (>= 0.18.1)
+    guard-bundler (2.1.0)
+      bundler (~> 1.0)
+      guard (~> 2.2)
+      guard-compat (~> 1.1)
     guard-compat (1.2.1)
-    guard-minitest (2.4.4)
-      guard-compat (~> 1.2)
-      minitest (>= 3.0)
-    guard-rubocop (1.2.0)
-      guard (~> 2.0)
-      rubocop (~> 0.20)
+    guard-rack (2.1.1)
+      ffi
+      guard (~> 2.3)
+      spoon
     hashie (3.4.3)
     i18n (0.7.0)
     ice_nine (0.11.2)
     json (1.8.3)
-    listen (3.0.6)
+    listen (3.0.5)
       rb-fsevent (>= 0.9.3)
-      rb-inotify (>= 0.9.7)
+      rb-inotify (>= 0.9)
     lumberjack (1.0.10)
-    memory_profiler (0.9.6)
     method_source (0.8.2)
+    mime-types (3.0)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2015.1120)
+    mini_portile2 (2.0.0)
     minitest (5.8.4)
     multi_json (1.11.2)
     multi_xml (0.5.5)
-    nenv (0.3.0)
+    nenv (0.2.0)
+    newrelic_rpm (3.14.2.312)
+    nokogiri (1.6.7.2)
+      mini_portile2 (~> 2.0.0.rc2)
     notiffany (0.0.8)
       nenv (~> 0.1)
       shellany (~> 0.0)
-    parser (2.3.0.6)
+    parser (2.3.0.2)
       ast (~> 2.2)
     powerpack (0.1.1)
     pry (0.10.3)
@@ -81,60 +105,82 @@ GEM
     rack (1.6.4)
     rack-accept (0.4.5)
       rack (>= 0.4)
+    rack-cors (0.4.0)
     rack-mount (0.8.3)
       rack (>= 1.0.0)
-    rack-protection (1.5.3)
-      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rainbow (2.1.0)
     rake (10.5.0)
     rb-fsevent (0.9.7)
-    rb-inotify (0.9.7)
+    rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    rr (1.1.2)
-    rubocop (0.38.0)
-      parser (>= 2.3.0.6, < 3.0)
+    rspec (3.4.0)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
+    rspec-core (3.4.2)
+      rspec-support (~> 3.4.0)
+    rspec-expectations (3.4.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-mocks (3.4.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.1)
+    rubocop (0.37.0)
+      parser (>= 2.3.0.2, < 3.0)
       powerpack (~> 0.1)
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.7)
-      unicode-display_width (~> 1.0, >= 1.0.1)
+      unicode-display_width (~> 0.3)
     ruby-progressbar (1.7.5)
+    rubyzip (1.1.7)
+    selenium-webdriver (2.50.0)
+      childprocess (~> 0.5)
+      multi_json (~> 1.0)
+      rubyzip (~> 1.0)
+      websocket (~> 1.0)
     shellany (0.0.1)
-    sinatra (1.4.7)
-      rack (~> 1.5)
-      rack-protection (~> 1.4)
-      tilt (>= 1.3, < 3)
     slop (3.6.0)
+    spoon (0.0.4)
+      ffi
     statsd-ruby (1.3.0)
     thor (0.19.1)
     thread_safe (0.3.5)
-    tilt (2.0.2)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    unicode-display_width (1.0.2)
+    unicode-display_width (0.3.1)
     virtus (1.0.5)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
       descendants_tracker (~> 0.0, >= 0.0.3)
       equalizer (~> 0.0, >= 0.0.9)
+    websocket (1.2.2)
+    xpath (2.0.0)
+      nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport (~> 4.2.6)
-  benchmark-ips (~> 2.5.0)
-  bundler (~> 1.11)
-  grape (~> 0.15.0)
-  guard-minitest (~> 2.4.4)
-  guard-rubocop (~> 1.2.0)
-  memory_profiler (~> 0.9.6)
-  minitest (~> 5.0)
-  rack-test (~> 0.6.3)
-  rake (~> 10.0)
-  rr (~> 1.1.2)
-  sinatra (~> 1.4.7)
+  capybara
+  grape
+  grape-entity
+  grape-swagger
+  guard
+  guard-bundler
+  guard-rack
+  json
+  mime-types
+  newrelic_rpm
+  nokogiri
+  rack-cors
+  rack-test
+  rake
+  rspec
+  rubocop
+  selenium-webdriver
   vitals!
 
 BUNDLED WITH

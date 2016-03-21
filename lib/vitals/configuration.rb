@@ -7,7 +7,6 @@ module Vitals
     attr_accessor :format
 
     def initialize
-      # todo autodiscover these
       @environment = fetch_development
       @facility = "default"
       @host = fetch_host
