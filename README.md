@@ -1,6 +1,7 @@
 # Vitals
 
 [![Build Status](https://travis-ci.org/jondot/vitals.svg?branch=master)](https://travis-ci.org/jondot/vitals.svg)
+[![Coverage Status](https://coveralls.io/repos/github/jondot/vitals/badge.svg?branch=master)](https://coveralls.io/github/jondot/vitals?branch=master)
 
 Vitals is the one stop shop to doing metrics in Ruby. It currently support Rails,
 Rack (Sinatra and any Rack-supported frameworks), and Grape.
