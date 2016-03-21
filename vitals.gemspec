@@ -39,6 +39,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "benchmark-ips", "~> 2.5.0"
   spec.add_development_dependency "memory_profiler", "~> 0.9.6"
 
+  spec.add_development_dependency "coveralls", "~> 0.8.13"
   # integrations
   # TODO we should test these under isolated environment while removing
   # these from here and running without bundler, inside docker, or by

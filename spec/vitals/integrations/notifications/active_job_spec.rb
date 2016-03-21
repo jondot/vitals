@@ -37,7 +37,7 @@ describe Vitals::Integrations::Notifications::ActiveJob do
     reporter.reports.count.must_equal(1)
     report = reporter.reports.first
     report[:timing].must_equal('jobs.foobarqueue_workers.foobar')
-    report[:val].must_be_within_delta(100, 20)
+    report[:val].must_be_within_delta(100, 50)
     reporter.flush
     
     ActiveSupport::Notifications.instrument('perform.active_job',
@@ -50,7 +50,7 @@ describe Vitals::Integrations::Notifications::ActiveJob do
     reporter.reports.count.must_equal(1)
     report = reporter.reports.first
     report[:timing].must_equal('jobs.foobarqueue_jobs.foobar')
-    report[:val].must_be_within_delta(100, 20)
+    report[:val].must_be_within_delta(100, 50)
   end
 end
 

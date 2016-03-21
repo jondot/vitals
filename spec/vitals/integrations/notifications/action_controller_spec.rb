@@ -32,7 +32,7 @@ describe Vitals::Integrations::Notifications::ActionController do
     reporter.reports.count.must_equal(3)
     report = reporter.reports[0]
     report[:timing].must_equal('controllers.registrations_new_get.200.all')
-    report[:val].must_be_within_delta(100, 20)
+    report[:val].must_be_within_delta(100, 50)
     
     report = reporter.reports[1]
     report[:timing].must_equal('controllers.registrations_new_get.200.db')
