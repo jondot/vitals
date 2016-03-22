@@ -4,9 +4,10 @@ rvm:
   - 2.1.0
   - 2.2.0
   - 2.3.0
-  - ruby-head
+#  - ruby-head
 # use latest bundler because of ruby-head exposing a bundler bug.
 # see https://github.com/bundler/bundler/pull/3559
+# So, that didn't work. so let's not use ruby-head for a while
 before_install: gem install bundler
 matrix:
   include:
