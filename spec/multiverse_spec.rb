@@ -1,15 +1,18 @@
 require 'spec_helper'
+require 'bundler'
 
 
 if ENV['INTEGRATION']
   describe "multiverse" do
     it "rails 4.2" do
-      Dir.chdir('spec/multiverse/rails42_app') do
-        system('pwd')
-        system('ls')
-        ignore_bundle = 'BUNDLE_IGNORE_CONFIG=1 '
-        system("#{ignore_bundle}bundle config")
-        system("#{ignore_bundle}install --path vendor/bundle && #{ignore_bundle}RAILS_ENV=test bundle exec rake db:migrate && #{ignore_bundle}bundle exec rake test").must_equal true
+      Bundler.with_clean_env do
+        Dir.chdir('spec/multiverse/rails42_app') do
+          system('pwd')
+          system('ls')
+          ignore_bundle = 'BUNDLE_IGNORE_CONFIG=1 '
+          system("#{ignore_bundle}bundle config")
+          system("#{ignore_bundle}install --path vendor/bundle && #{ignore_bundle}RAILS_ENV=test bundle exec rake db:migrate && #{ignore_bundle}bundle exec rake test").must_equal true
+        end
       end
     end
     it "grape-rack" do
