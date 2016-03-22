@@ -7,21 +7,21 @@ if ENV['INTEGRATION']
       Dir.chdir('spec/multiverse/rails42_app') do
         system('pwd')
         system('ls')
-        system('bundle install --quiet && RAILS_ENV=test bundle exec rake db:migrate && bundle exec rake test').must_equal true
+        system('bundle install && RAILS_ENV=test bundle exec rake db:migrate && bundle exec rake test').must_equal true
       end
     end
     it "grape-rack" do
       Dir.chdir('spec/multiverse/grape-on-rack') do
         system('pwd')
         system('ls')
-        system('bundle install --quiet && bundle exec rake spec').must_equal true
+        system('bundle install && bundle exec rake spec').must_equal true
       end
     end
     it "grape-rails" do
       Dir.chdir('spec/multiverse/grape-on-rails') do
         system('pwd')
         system('ls')
-        system('bundle install --quiet && RAILS_ENV=test bundle exec rake db:migrate && bundle exec rake spec').must_equal true
+        system('bundle install && RAILS_ENV=test bundle exec rake db:migrate && bundle exec rake spec').must_equal true
       end
     end
     it "padrino" do
