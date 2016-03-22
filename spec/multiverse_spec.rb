@@ -15,19 +15,23 @@ if ENV['INTEGRATION']
       end
     end
     it "grape-rack" do
+      Bundler.with_clean_env do
       Dir.chdir('spec/multiverse/grape-on-rack') do
         system('pwd')
         system('ls')
         system('bundle config')
         system('bundle install && bundle exec rake spec').must_equal true
       end
+      end
     end
     it "grape-rails" do
+      Bundler.with_clean_env do
       Dir.chdir('spec/multiverse/grape-on-rails') do
         system('pwd')
         system('ls')
         system('bundle config')
         system('bundle install && RAILS_ENV=test bundle exec rake db:migrate && bundle exec rake spec').must_equal true
+      end
       end
     end
     it "padrino" do
