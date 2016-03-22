@@ -6,6 +6,7 @@ include FileUtils
 
 if ENV['INTEGRATION']
   describe "multiverse" do
+    let(:bundle){ 'bundle install --path=vendor/bundle' }
     def state
       puts `ls`
       puts `pwd`
@@ -14,7 +15,7 @@ if ENV['INTEGRATION']
       Bundler.with_clean_env do
         Dir.chdir('spec/multiverse/rails42_app') do
           state
-          system("bundle install && RAILS_ENV=test bundle exec rake db:migrate && bundle exec rake test").must_equal true
+          system("#{bundle} && RAILS_ENV=test bundle exec rake db:migrate && bundle exec rake test").must_equal true
         end
       end
     end
@@ -22,7 +23,7 @@ if ENV['INTEGRATION']
       Bundler.with_clean_env do
         Dir.chdir('spec/multiverse/grape-on-rack') do
           state
-          system('bundle install && bundle exec rake spec').must_equal true
+          system("#{bundle} && bundle exec rake spec").must_equal true
         end
       end
     end
@@ -30,7 +31,7 @@ if ENV['INTEGRATION']
       Bundler.with_clean_env do
         Dir.chdir('spec/multiverse/grape-on-rails') do
           state
-          system('bundle install && bundle exec rake spec').must_equal true
+          system("#{ bundle } && bundle exec rake spec").must_equal true
         end
       end
     end
