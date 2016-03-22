@@ -12,4 +12,4 @@ RSpec.configure do |config|
 end
 
 require 'capybara/rspec'
-require File.expand_path( '../../multiverse_helper', File.dirname(__FILE__))
+require File.expand_path( '../../../multiverse_helper', File.dirname(__FILE__))

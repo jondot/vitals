@@ -21,4 +21,4 @@ Capybara.configure do |config|
   config.server_port = 9293
 end
 
-require File.expand_path( '../../multiverse_helper', File.dirname(__FILE__))
+require File.expand_path( '../../../multiverse_helper', File.dirname(__FILE__))
