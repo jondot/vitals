@@ -5,7 +5,7 @@ include FileUtils
 
 
 describe "multiverse" do
-  let(:bundle){ 'bundle install --path=vendor/bundle' }
+  let(:bundle){ 'bundle install --quiet --path=vendor/bundle' }
   def state
     puts `pwd`
   end

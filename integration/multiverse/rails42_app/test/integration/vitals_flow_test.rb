@@ -57,7 +57,8 @@ class VitalsFlowTest < ActionDispatch::IntegrationTest
 
     assert_timings Vitals.reporter.reports,
                    metrics,
-                   TestLogSubscriber.controller_times
+                   TestLogSubscriber.controller_times,
+                   80
   end
 
   test "post posts" do
@@ -70,7 +71,8 @@ class VitalsFlowTest < ActionDispatch::IntegrationTest
 
     assert_timings Vitals.reporter.reports,
                    metrics,
-                   TestLogSubscriber.controller_times
+                   TestLogSubscriber.controller_times,
+                   80
   end
 
 end
