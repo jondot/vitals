@@ -11,4 +11,4 @@ before_install: gem install bundler
 matrix:
   include:
     - rvm: 2.3.0
-      env: INTEGRATION=1
+      script: bundle exec rake multiverse
