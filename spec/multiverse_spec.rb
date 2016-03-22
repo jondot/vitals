@@ -1,5 +1,7 @@
 require 'spec_helper'
 require 'bundler'
+require 'fileutils'
+include FileUtils
 
 
 if ENV['INTEGRATION']
@@ -8,7 +10,7 @@ if ENV['INTEGRATION']
       Bundler.with_clean_env do
         Dir.chdir('spec/multiverse/rails42_app') do
           ignore_bundle = 'BUNDLE_IGNORE_CONFIG=1 BUNDLE_GEMFILE=`pwd`/Gemfile '
-          system("#{ignore_bundle}install && #{ignore_bundle}RAILS_ENV=test bundle exec rake db:migrate && #{ignore_bundle}bundle exec rake test").must_equal true
+          sh("#{ignore_bundle}install && #{ignore_bundle}RAILS_ENV=test bundle exec rake db:migrate && #{ignore_bundle}bundle exec rake test").must_equal true
         end
       end
     end
