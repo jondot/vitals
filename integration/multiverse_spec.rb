@@ -7,7 +7,6 @@ include FileUtils
 describe "multiverse" do
   let(:bundle){ 'bundle install --path=vendor/bundle' }
   def state
-    puts `ls`
     puts `pwd`
   end
   it "rails 4.2" do
