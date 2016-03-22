@@ -9,7 +9,7 @@ if ENV['INTEGRATION']
     it "rails 4.2" do
       Bundler.with_clean_env do
         Dir.chdir('spec/multiverse/rails42_app') do
-          sh("bundle install && RAILS_ENV=test bundle exec rake db:migrate && bundle exec rake test").must_equal true
+          system("bundle install && RAILS_ENV=test bundle exec rake db:migrate && bundle exec rake test").must_equal true
         end
       end
     end
