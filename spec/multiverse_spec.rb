@@ -8,7 +8,7 @@ if ENV['INTEGRATION']
         system('pwd')
         system('ls')
         system('bundle config')
-        system('bundle install && RAILS_ENV=test bundle exec rake db:migrate && bundle exec rake test').must_equal true
+        system('BUNDLE_PATH=`pwd` bundle install && RAILS_ENV=test bundle exec rake db:migrate && bundle exec rake test').must_equal true
       end
     end
     it "grape-rack" do
