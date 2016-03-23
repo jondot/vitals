@@ -43,6 +43,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "grape", "~> 0.15.0"
   spec.add_development_dependency "activesupport", "~> 4.2.6"
   spec.add_development_dependency "sinatra", "~> 1.4.7"
-
+  spec.add_development_dependency "byebug", "~> 8.2.2"
 
 end

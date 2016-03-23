@@ -49,7 +49,7 @@ describe Vitals do
     let(:assert_defaults ){ lambda {
         host = Vitals::Utils.hostname
         Vitals.reporter.must_be_kind_of(Vitals::Reporters::InmemReporter)
-        Vitals.reporter.format.environment.must_equal('test')
+        Vitals.reporter.format.environment.must_equal(ENV['RACK_ENV'] || 'development')
         Vitals.reporter.format.host.must_equal(host)
         Vitals.reporter.format.facility.must_equal('default')
         Vitals.reporter.format.must_be_kind_of(Vitals::Formats::ProductionFormat)

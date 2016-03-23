@@ -117,3 +117,7 @@ class TestFormat
     args
   end
 end
+
+
+require 'grape'
+

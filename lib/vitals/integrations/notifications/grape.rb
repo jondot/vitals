@@ -11,16 +11,12 @@ module Vitals::Integrations::Notifications
     def self.handle(name, started, finished, unique_id, payload)
       endpoint = payload[:endpoint]
       route    = endpoint.route
-      version  = route.route_version
       method   = route.route_method.downcase
 
-      path = route.route_path.dup
-      path.sub!(/\(\..*\)$/, '')
-      path.sub!(":version", version) if version
-      path.gsub!(/\//, ".")
+      path = Vitals::Utils.grape_path(route)
 
       # TODO move 'grape' to configuration opts in subscribe!(opts)
-      m = "grape#{path}_#{method}.#{endpoint.status}.all"
+      m = "grape.#{path}_#{method}.#{endpoint.status}.all"
       Vitals.timing(m, duration(started, finished))
     end
 

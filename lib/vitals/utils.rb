@@ -11,5 +11,14 @@ module Vitals
     def self.sec_to_ms(sec)
       (1000.0 * sec).round
     end
+    # XXX grape specific, move this away some day?
+    def self.grape_path(route)
+      version = route.route_version
+      path = route.route_path.dup[1..-1]
+      path.sub!(/\(\..*\)$/, '')
+      path.sub!(":version", version) if version
+      path.gsub!(/\//, ".")
+      path
+    end
   end
 end

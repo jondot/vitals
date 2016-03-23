@@ -11,7 +11,7 @@ describe Vitals::Configuration do
 
   it 'should autodiscover env' do
     c = Vitals::Configuration.new
-    c.environment.must_equal("test")
+    c.environment.must_equal(ENV["RACK_ENV"] || 'development')
 
     ENV["RACK_ENV"] = 'production'
     c = Vitals::Configuration.new

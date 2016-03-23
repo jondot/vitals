@@ -29,6 +29,21 @@ class VitalsFlowTest < ActionDispatch::IntegrationTest
     TestLogSubscriber.attach_to :action_controller
   end
 
+  test "get posts with rack middleware" do
+    get '/posts'
+    metrics = %w{
+      controllers.posts_index_get.200.all
+      controllers.posts_index_get.200.db
+      controllers.posts_index_get.200.view
+      requests.posts_index_get.200
+    }
+
+    assert_timings Vitals.reporter.reports,
+                   metrics,
+                   TestLogSubscriber.controller_times+[-1],
+                   60
+  end
+
   test "get new which also triggers a job" do
     get '/posts/new'
 
@@ -37,11 +52,12 @@ class VitalsFlowTest < ActionDispatch::IntegrationTest
       controllers.posts_new_get.200.all
       controllers.posts_new_get.200.db
       controllers.posts_new_get.200.view
+      requests.posts_new_get.200
     }
 
     assert_timings Vitals.reporter.reports,
                    metrics,
-                   [3]+TestLogSubscriber.controller_times,
+                   [-1]+TestLogSubscriber.controller_times+[-1],
                    60
 
   end
@@ -53,11 +69,12 @@ class VitalsFlowTest < ActionDispatch::IntegrationTest
       controllers.posts_index_get.200.all
       controllers.posts_index_get.200.db
       controllers.posts_index_get.200.view
+      requests.posts_index_get.200
     }
 
     assert_timings Vitals.reporter.reports,
                    metrics,
-                   TestLogSubscriber.controller_times,
+                   TestLogSubscriber.controller_times+[-1],
                    80
   end
 
@@ -67,11 +84,12 @@ class VitalsFlowTest < ActionDispatch::IntegrationTest
     metrics = %w{
       controllers.posts_create_post.302.all
       controllers.posts_create_post.302.db
+      requests.posts_create_post.302
     }
 
     assert_timings Vitals.reporter.reports,
                    metrics,
-                   TestLogSubscriber.controller_times,
+                   TestLogSubscriber.controller_times+[-1],
                    80
   end
 

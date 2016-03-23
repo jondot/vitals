@@ -7,31 +7,6 @@ require 'grape'
 # requires mocking an endpoint, and a path, and a route and
 # so on. Just use the real thing with rack-test.
 #
-module GrapeTestAPI
-  class API < Grape::API
-    version 'v1', using: :path
-    format :json
-    prefix :api
-
-    resource :statuses do
-      get :public_timeline do
-        sleep 0.1
-        "hello world"
-      end
-    end
-  end
-
-  class DefaultAPI < Grape::API
-    format :json
-    resource :statuses do
-      get :public_timeline do
-        sleep 0.1
-        "hello world"
-      end
-    end
-  end
-end
-
 
 describe Vitals::Integrations::Notifications::Grape do
   let(:reporter){Vitals::Reporters::InmemReporter.new}
@@ -47,10 +22,21 @@ describe Vitals::Integrations::Notifications::Grape do
     ActiveSupport::Notifications.unsubscribe(@sub)
   end
 
-  describe GrapeTestAPI::API do
+  describe "grape notifications api" do
     include Rack::Test::Methods
     def app
-      ::GrapeTestAPI::API.new
+      Class.new(Grape::API) do
+        version 'v1', using: :path
+        format :json
+        prefix :api
+
+        resource :statuses do
+          get :public_timeline do
+            sleep 0.1
+            "hello world"
+          end
+        end
+      end
     end
 
     it 'handles prefix, version and format' do
@@ -64,10 +50,18 @@ describe Vitals::Integrations::Notifications::Grape do
     end
   end
 
-  describe GrapeTestAPI::DefaultAPI do
+  describe "grape nonversioned notifications api" do
     include Rack::Test::Methods
     def app
-      ::GrapeTestAPI::DefaultAPI.new
+      Class.new(Grape::API) do
+        format :json
+        resource :statuses do
+          get :public_timeline do
+            sleep 0.1
+            "hello world"
+          end
+        end
+      end
     end
 
     it 'handles default api' do
