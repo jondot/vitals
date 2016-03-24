@@ -36,6 +36,14 @@ module Vitals
     @reporter
   end
 
+  def self.subscribe!(*modules)
+    # give out a list of subscribers too
+    modules.map do |mod|
+      require "vitals/integrations/notifications/#{ mod }"
+      klass = Object.const_get("Vitals::Integrations::Notifications::#{classify(mod)}")
+      klass.subscribe!
+    end
+  end
   #
   # reporter delegators
   #
@@ -52,5 +60,10 @@ module Vitals
 
   def self.gauge(m, val)
     reporter.gauge(m, val)
+  end
+
+  private
+  def self.classify(sym)
+    sym.to_s.split('_').collect!{ |w| w.capitalize }.join
   end
 end

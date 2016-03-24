@@ -3,8 +3,9 @@
 [![Build Status](https://travis-ci.org/jondot/vitals.svg?branch=master)](https://travis-ci.org/jondot/vitals.svg)
 [![Coverage Status](https://coveralls.io/repos/github/jondot/vitals/badge.svg?branch=master)](https://coveralls.io/github/jondot/vitals?branch=master)
 
-Vitals is the one stop shop to doing metrics in Ruby. It currently support Rails,
-Rack (Sinatra and any Rack-supported frameworks), and Grape.
+Vitals is your one stop shop for metrics in Ruby and Ruby Web and API
+frameworks. It currently support Rails, Rack (Sinatra and any Rack-supported
+frameworks), and Grape.
 
 
 ## Installation
@@ -53,9 +54,22 @@ require 'vitals/integrations/notifications/grape'
 Vitals::Integrations::Notifications::Grapej.subscribe!
 ```
 
+You can shortcircuit the notifications configuration by using `subscribe!` right after configuring:
+
+```ruby
+require 'vitals'
+Vitals.configure! do |c|
+  c.facility = 'my_service'
+  c.reporter = Vitals::Reporters::StatsdReporter.new(host: 'statsd-host', port: 8125)
+end
+# Subscribe to Rails' controllers, background jobs, and grape's API controllers
+Vitals.subscribe!(:action_controller, :active_job, :grape)
+```
+
 ### Rack
 
-Here, you can use the `Requests` middleware. Here is a sample Sinatra app:
+You can use the `Requests` middleware for pure Rack apps or Sinatra, Rails, and Grape instead of, or
+in addition to, using the notification based instrumentation. Here is a sample Sinatra app:
 
 ```ruby
 require 'vitals'
@@ -137,6 +151,12 @@ Tests and benchmarks should be run with at least Ruby 2.1 (because of memory pro
 
 ```
 $ bundle install && rake spec && rake bench
+```
+
+You can use the following to test various web frameworks using their own integration testing stacks:
+
+```
+$ rake multiverse
 ```
 
 # Contributing
