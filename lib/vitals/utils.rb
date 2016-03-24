@@ -14,9 +14,10 @@ module Vitals
     # XXX grape specific, move this away some day?
     def self.grape_path(route)
       version = route.route_version
-      path = route.route_path.dup[1..-1]
-      path.sub!(/\(\..*\)$/, '')
-      path.sub!(":version", version) if version
+      path = route.route_path.dup[1..-1]          # /foo/bar/baz -> foo/bar/baz
+      path.sub!(/\(\..*\)$/, '')                  # (.json) -> ''
+      path.sub!(":version", version) if version   # :version -> v1
+      path.gsub!(/\//, ".")     # foo/bar -> foo.bar
       path.gsub!(/\//, ".")
       path
     end
