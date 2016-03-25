@@ -28,8 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "minitest", "~> 5.0"
   spec.add_development_dependency "rack-test", "~> 0.6.3"
   spec.add_development_dependency "rr", "~> 1.1.2"
-  spec.add_development_dependency "benchmark-ips", "~> 2.5.0"
-  spec.add_development_dependency "memory_profiler", "~> 0.9.6"
+  spec.add_development_dependency "benchmark-ipsa", "~> 0.2.0"
 
   spec.add_development_dependency "coveralls", "~> 0.8.13"
   # integrations

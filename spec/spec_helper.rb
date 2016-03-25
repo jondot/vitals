@@ -10,7 +10,7 @@ require 'rr'
 
 require 'rack/test'
 
-require 'benchmark/ips'
+require 'benchmark/ipsa'
 require 'memory_profiler'
 
 # TODO remember to set vitals config to nil
@@ -19,25 +19,8 @@ require 'memory_profiler'
 
 # TODO extract this pattern to a gem
 def bench(label, cases)
-  def rjust(label) #stolen from benchmark-ips
-    label = label.to_s
-    if label.size > 20
-      "#{label}\n#{' ' * 20}"
-    else
-      label.rjust(20)
-    end
-  end
-
   it "bench #{label}" do
-    puts "Allocations -------------------------------------"
-    cases.each do |name, block|
-      report = MemoryProfiler.report(&block)
-      $stdout.print(rjust(name))
-      $stdout.printf("%10s alloc/ret %10s strings/ret\n",
-                     "#{report.total_allocated}/#{report.total_retained}",
-                     "#{report.strings_allocated.count}/#{report.strings_retained.count}")
-    end
-    Benchmark.ips do |x|
+    Benchmark.ipsa do |x|
       cases.each do |name, block|
         x.report(name, block)
       end

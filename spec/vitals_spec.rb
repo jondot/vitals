@@ -22,7 +22,6 @@ describe Vitals do
         Vitals.reporter.format.host.must_equal(host)
         Vitals.reporter.format.facility.must_equal('default')
         Vitals.reporter.format.must_be_kind_of(Vitals::Formats::ProductionFormat)
-        Vitals.config.modules.must_equal []
       }
     }
     
