@@ -51,7 +51,7 @@ Vitals::Integrations::Notifications::ActiveJob.subscribe!
 # Grape
 #
 require 'vitals/integrations/notifications/grape'
-Vitals::Integrations::Notifications::Grapej.subscribe!
+Vitals::Integrations::Notifications::Grape.subscribe!
 ```
 
 You can shortcircuit the notifications configuration by using `subscribe!` right after configuring:
