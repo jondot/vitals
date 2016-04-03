@@ -14,7 +14,7 @@ describe Acme::API do
     get '/api/ring'
     expect(JSON.parse(last_response.body)[:rang].to_i).to be >= 0
     metrics = %w{
-      grape.api.ring_get.200.all
+      grape.api.ring.get.200.all
     }
     assert_timings Vitals.reporter.reports, metrics, [0]
   end

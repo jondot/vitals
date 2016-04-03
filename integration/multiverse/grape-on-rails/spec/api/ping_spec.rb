@@ -7,7 +7,7 @@ describe Acme::Ping do
   it 'ping' do
     get '/api/ping'
     metrics = %w{
-      grape.api.ping_get.200.all
+      grape.api.ping.get.200.all
     }
     assert_timings Vitals.reporter.reports, metrics, [0]
     expect(response.body).to eq({ ping: 'pong' }.to_json)
