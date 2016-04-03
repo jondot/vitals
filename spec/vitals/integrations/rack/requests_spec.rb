@@ -37,7 +37,7 @@ describe Vitals::Integrations::Rack::Requests do
 
       reporter.reports.count.must_equal(1)
       report = reporter.reports[0]
-      report[:timing].must_equal('requests.statuses.public_timeline_get.200')
+      report[:timing].must_equal('requests.statuses.public_timeline.get.200')
       report[:val].must_be_within_delta(100, 20)
     end
   end
@@ -66,7 +66,7 @@ describe Vitals::Integrations::Rack::Requests do
 
       reporter.reports.count.must_equal(1)
       report = reporter.reports[0]
-      report[:timing].must_equal('requests.api.v1.statuses.public_timeline_get.200')
+      report[:timing].must_equal('requests.api.v1.statuses.public_timeline.get.200')
       report[:val].must_be_within_delta(100, 20)
     end
   end
@@ -100,7 +100,7 @@ describe Vitals::Integrations::Rack::Requests do
 
       reporter.reports.count.must_equal(1)
       report = reporter.reports[0]
-      report[:timing].must_equal('requests.foo_bar_baz_get.200')
+      report[:timing].must_equal('requests.foo_bar_baz.get.200')
       report[:val].must_be_within_delta(100, 20)
     end
 
@@ -110,7 +110,7 @@ describe Vitals::Integrations::Rack::Requests do
 
       reporter.reports.count.must_equal(1)
       report = reporter.reports[0]
-      report[:timing].must_equal('requests.foo_bar__name_post.200')
+      report[:timing].must_equal('requests.foo_bar__name.post.200')
       report[:val].must_be_within_delta(100, 20)
     end
 
@@ -120,7 +120,7 @@ describe Vitals::Integrations::Rack::Requests do
 
       reporter.reports.count.must_equal(1)
       report = reporter.reports[0]
-      report[:timing].must_equal('requests.posts__id_comments_post.200')
+      report[:timing].must_equal('requests.posts__id_comments.post.200')
       report[:val].must_be_within_delta(100, 20)
     end
   end

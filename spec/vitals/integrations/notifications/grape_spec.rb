@@ -45,7 +45,7 @@ describe Vitals::Integrations::Notifications::Grape do
 
       reporter.reports.count.must_equal(1)
       report = reporter.reports[0]
-      report[:timing].must_equal('grape.api.v1.statuses.public_timeline_get.200.all')
+      report[:timing].must_equal('grape.api.v1.statuses.public_timeline.get.200.all')
       report[:val].must_be_within_delta(100, 40)
     end
   end
@@ -69,7 +69,7 @@ describe Vitals::Integrations::Notifications::Grape do
       last_response.ok?.must_equal(true)
       reporter.reports.count.must_equal(1)
       report = reporter.reports[0]
-      report[:timing].must_equal('grape.statuses.public_timeline_get.200.all')
+      report[:timing].must_equal('grape.statuses.public_timeline.get.200.all')
       report[:val].must_be_within_delta(100, 40)
     end
   end
