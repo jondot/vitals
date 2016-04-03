@@ -82,9 +82,9 @@ class VitalsFlowTest < ActionDispatch::IntegrationTest
     post '/posts', post: { title: 'foobar'}
 
     metrics = %w{
-      controllers.posts_create_post.302.all
-      controllers.posts_create_post.302.db
-      requests.posts_create_post.302
+      controllers.posts_create.post.302.all
+      controllers.posts_create.post.302.db
+      requests.posts_create.post.302
     }
 
     assert_timings Vitals.reporter.reports,
