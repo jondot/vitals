@@ -3,6 +3,7 @@ module Vitals::Integrations::Rack
     REQUEST_METHOD = 'REQUEST_METHOD'.freeze
 
     RACK_PATH_INFO = 'PATH_INFO'.freeze
+    RACK_ROUTER_INFO = 'rack.routing_args'.freeze
     SINATRA_PATH_INFO = 'sinatra.route'.freeze
     GRAPE_PATH_INFO = 'api.endpoint'.freeze
     RAILS_PATH_INFO = 'action_controller.instance'.freeze
@@ -40,7 +41,16 @@ module Vitals::Integrations::Rack
     end
 
     def self.grape_path(env)
-      Vitals::Utils.grape_path(env[GRAPE_PATH_INFO].route)
+      route = if env[RACK_ROUTER_INFO]
+        # grape 0.11 route bug workaround with http_basic.
+        # when unauthenticated, GRAPE_PATH_INFO route has a nil env. this one
+        # here doesn't:
+        env[RACK_ROUTER_INFO][:route_info]
+      else
+        # grape > 0.11
+        env[GRAPE_PATH_INFO].route
+      end
+      Vitals::Utils.grape_path(route)
     end
 
     def self.rails_path(env)

@@ -28,7 +28,27 @@ describe Vitals::Integrations::Rack::Requests do
             "hello world"
           end
         end
+        resource :auth do
+          http_basic do |u,p|
+            false
+          end
+
+          get :secret do
+            "impossible to get here"
+          end
+        end
       end
+    end
+
+    it 'handles grape\'s http_basic middleware' do
+      get '/auth/secret'
+      last_response.ok?.must_equal(false)
+      last_response.status.must_equal 401
+      # grape notification doesn't register if not auth'd :(
+      reporter.reports.count.must_equal(1)
+      report = reporter.reports[0]
+      report[:timing].must_equal('requests.auth.secret.get.401')
+      report[:val].must_be_within_delta(2, 20)
     end
 
     it 'handles get' do
@@ -38,7 +58,7 @@ describe Vitals::Integrations::Rack::Requests do
       reporter.reports.count.must_equal(1)
       report = reporter.reports[0]
       report[:timing].must_equal('requests.statuses.public_timeline.get.200')
-      report[:val].must_be_within_delta(100, 20)
+      report[:val].must_be_within_delta(100, 50)
     end
   end
 

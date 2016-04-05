@@ -36,7 +36,24 @@ describe Vitals::Integrations::Notifications::Grape do
             "hello world"
           end
         end
+
+        resource :auth do
+          http_basic do |u,p|
+            false
+          end
+
+          get :secret do
+            "impossible to get here"
+          end
+        end
       end
+    end
+    it 'handles grape\'s http_basic middleware' do
+      get '/api/v1/auth/secret'
+      last_response.ok?.must_equal(false)
+      last_response.status.must_equal 401
+      # grape notification doesn't register if not auth'd :(
+      reporter.reports.count.must_equal 0
     end
 
     it 'handles prefix, version and format' do
