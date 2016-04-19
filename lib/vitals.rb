@@ -45,12 +45,12 @@ module Vitals
       klass.subscribe!
     end
   end
+
   #
   # reporter delegators
   #
   # hardwired for performance
-  # 
-  # TODO timing
+  # (forwardable delegators go through __send__ and generate gc waste)
   def self.inc(m)
     reporter.inc(m)
   end
