@@ -65,6 +65,26 @@ describe Vitals::Integrations::Notifications::Grape do
       report[:timing].must_equal('grape.api.v1.statuses.public_timeline.get.200.all')
       report[:val].must_be_within_delta(100, 40)
     end
+
+    describe 'use a non-dot path separator' do
+      before do
+        Vitals.configure! do |c|
+          c.reporter = reporter
+          c.path_sep = '__'
+        end
+      end
+
+      it 'handles prefix, version and format' do
+        get "/api/v1/statuses/public_timeline"
+        last_response.ok?.must_equal(true)
+
+        reporter.reports.count.must_equal(1)
+        report = reporter.reports[0]
+        report[:timing].must_equal('grape.api__v1__statuses__public_timeline.get.200.all')
+        report[:val].must_be_within_delta(100, 40)
+      end
+    end
+      
   end
 
   describe "grape nonversioned notifications api" do

@@ -60,6 +60,25 @@ describe Vitals::Integrations::Rack::Requests do
       report[:timing].must_equal('requests.statuses.public_timeline.get.200')
       report[:val].must_be_within_delta(100, 50)
     end
+
+    describe 'use a non-dot path separator' do
+      before do
+        reporter.flush
+        Vitals.configure! do |c|
+          c.reporter = reporter
+        end
+      end
+
+      it 'handles get' do
+        get "/statuses/public_timeline"
+        last_response.ok?.must_equal(true)
+
+        reporter.reports.count.must_equal(1)
+        report = reporter.reports[0]
+        report[:timing].must_equal('requests.statuses.public_timeline.get.200')
+        report[:val].must_be_within_delta(100, 50)
+      end
+    end
   end
 
   describe "grape rack versioned api" do

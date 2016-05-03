@@ -12,6 +12,17 @@ module Vitals
       @host = fetch_host
       @reporter = Vitals::Reporters::InmemReporter.new
       @format = Vitals::Formats::ProductionFormat
+      self.path_sep = '.'
+    end
+
+    # delegate to utils, until this part of the utils
+    # finds a new home with a new abstraction
+    def path_sep=(val)
+      Vitals::Utils.path_sep = val
+    end
+
+    def path_sep
+      Vitals::Utils.path_sep = val
     end
 
     def build_format

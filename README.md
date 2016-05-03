@@ -140,8 +140,41 @@ Vitals.configure! do |c|
 
   # Use a different format perhaps? (default: ProductionFormat)
   # c.format = Vitals::Formats::HostLastFormat
+
+  # Use a different metric path separator, control how hierarcies are generated (default: '.')
+  # c.path_sep = '__'
 end
 ```
+
+### Metric Hierarchies
+
+If you leave the default metric path separator, it will be a dot. This means Graphite will parse
+this and generate a branch in the tree when ever it sees a new segment, so:
+
+```
+requests.api.status.registration.get.200.host-123
+```
+
+Will be created from a `GET /api/status/registration`
+
+On the other hand, if you choose a non-dot separator, like underscore, then:
+
+```
+requests.api_status_registration.get.200.host-123
+```
+
+Will be generated from a `GET /api/status/registration`.
+
+You can pick either of those and the trade-offs are:
+
+* Nested hierarchy (using a dot): fine-grained control over grouping your metrics efficiently. If you
+want to pick and choose a metric, and be able to group based on topics efficiently. You cannot group cross-segments of a path in graphite.
+
+* Flat hierarchy (using anything other than a dot, like an underscore): grouping over segments can be glob-like, so
+quick wins like "graph all errors" can be had like this: `api.*.500.*`. However, every time you want to group metrics, you will need to find
+the appropriate glob pattern, which will taxi Graphite for a huge amounts of metrics.
+
+The default separator is a dot, which makes everything hierarchical.
 
 
 
