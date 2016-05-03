@@ -1,6 +1,12 @@
 require 'spec_helper'
 
 describe Vitals do
+  describe 'test setup' do
+    it 'should sync Gemfile for multiverse tests' do
+      /vitals \(#{Vitals::VERSION}\)/.match(File.read(File.expand_path('../Gemfile.lock', File.dirname(__FILE__)))).wont_be_nil
+    end
+  end
+
   describe 'api' do
     it 'should delegate to its reporter' do
       mock(Vitals.reporter).inc("foo.bar").times(1)
