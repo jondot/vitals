@@ -28,7 +28,7 @@ Or install it yourself as:
 
 ### Rails or Grape
 
-Make an `initializers/vitals.rb` initializer, and cofigure Vitals as you'd like:
+Make an `initializers/vitals.rb` initializer, and configure Vitals as you'd like:
 ```ruby
 require 'vitals'
 Vitals.configure! do |c|
