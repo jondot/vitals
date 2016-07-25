@@ -7,6 +7,7 @@ module Vitals::Integrations::Rack
     SINATRA_PATH_INFO = 'sinatra.route'.freeze
     GRAPE_PATH_INFO = 'api.endpoint'.freeze
     RAILS_PATH_INFO = 'action_controller.instance'.freeze
+    REQ_PREF = 'vitals.req_prefix'
 
     def initialize(app, options = {})
       @app = app
@@ -17,6 +18,8 @@ module Vitals::Integrations::Rack
       start = Time.now
       status, header, body = @app.call(env)
       t = Time.now - start
+      req_prefix = env[REQ_PREF] ? "#{env[REQ_PREF]}." : ''
+
       path = if env[SINATRA_PATH_INFO]
             Requests.sinatra_path(env)
           elsif env[GRAPE_PATH_INFO]
@@ -26,7 +29,7 @@ module Vitals::Integrations::Rack
           else
             Requests.rack_path(env)
           end
-      m = "requests.#{@prefix}#{path}.#{env[REQUEST_METHOD].downcase}.#{status}"
+      m = "requests.#{@prefix}#{req_prefix}#{path}.#{env[REQUEST_METHOD].downcase}.#{status}"
 
       # TODO add option to customize 'requests' through options
       Vitals.timing(m, Vitals::Utils.sec_to_ms(t))

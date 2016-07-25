@@ -110,6 +110,39 @@ describe Vitals::Integrations::Rack::Requests do
     end
   end
 
+  describe "rack api request prefix" do
+    include Rack::Test::Methods
+    def app
+      Class.new(Sinatra::Base) do
+        use(Class.new do
+          def initialize(app, options={})
+            @app = app
+          end
+
+          def call(env)
+            env['vitals.req_prefix'] = 'foobar_req_prefix'
+            @app.call(env)
+          end
+        end)
+        use Vitals::Integrations::Rack::Requests
+
+        get '/foo/bar/baz' do
+          "hello get"
+        end
+
+      end
+    end
+
+    it 'handles get' do
+      get '/foo/bar/baz'
+      last_response.ok?.must_equal(true)
+
+      reporter.reports.count.must_equal(1)
+      report = reporter.reports[0]
+      report[:timing].must_equal('requests.foobar_req_prefix.foo_bar_baz.get.200')
+    end
+  end
+
   describe "sinatra rack api" do
     include Rack::Test::Methods
     def app
