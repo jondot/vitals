@@ -29,7 +29,9 @@ module Vitals::Integrations::Rack
           else
             Requests.rack_path(env)
           end
-      m = "requests.#{@prefix}#{req_prefix}#{path}.#{env[REQUEST_METHOD].downcase}.#{status}"
+
+      path = !path.empty? ? path + '.' : path
+      m = "requests.#{@prefix}#{req_prefix}#{path}#{env[REQUEST_METHOD].downcase}.#{status}"
 
       # TODO add option to customize 'requests' through options
       Vitals.timing(m, Vitals::Utils.sec_to_ms(t))

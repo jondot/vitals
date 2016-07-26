@@ -143,6 +143,28 @@ describe Vitals::Integrations::Rack::Requests do
     end
   end
 
+  describe "sinatra wacky rack api" do
+    include Rack::Test::Methods
+    def app
+      Class.new(Sinatra::Base) do
+        use Vitals::Integrations::Rack::Requests
+
+        get '/' do
+          "hello get"
+        end
+      end
+    end
+
+    it 'handles a blank get' do
+      get '/'
+      last_response.ok?.must_equal(true)
+
+      reporter.reports.count.must_equal(1)
+      report = reporter.reports[0]
+      report[:timing].must_equal('requests.get.200')
+    end
+  end
+
   describe "sinatra rack api" do
     include Rack::Test::Methods
     def app
@@ -193,7 +215,7 @@ describe Vitals::Integrations::Rack::Requests do
       reporter.reports.count.must_equal(1)
       report = reporter.reports[0]
       report[:timing].must_equal('requests.posts__id_comments.post.200')
-      report[:val].must_be_within_delta(100, 20)
+      report[:val].must_be_within_delta(100, 40)
     end
   end
 end
