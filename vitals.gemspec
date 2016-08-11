@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "statsd-ruby", "~> 1.3.0"
+  spec.add_runtime_dependency "riemann-client", "~> 0.2.6"
 
   spec.add_development_dependency "guard-rubocop", "~> 1.2.0"
   spec.add_development_dependency "guard-minitest", "~> 2.4.4"

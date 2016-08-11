@@ -14,6 +14,7 @@ require 'vitals/reporters/base_reporter'
 require 'vitals/reporters/inmem_reporter'
 require 'vitals/reporters/console_reporter'
 require 'vitals/reporters/multi_reporter'
+require 'vitals/reporters/riemann_reporter'
 require 'vitals/reporters/statsd_reporter'
 require 'vitals/reporters/dns_resolving_statsd_reporter'
 

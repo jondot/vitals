@@ -95,6 +95,12 @@ def it_formats(format_class, results)
   end
 end
 
+def freeze_time_at(epoch)
+  Time.stub(:now, Time.at(epoch)) do
+    yield
+  end
+end
+
 class TestFormat
   def format(args)
     args
