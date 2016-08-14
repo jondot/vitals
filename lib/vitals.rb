@@ -19,14 +19,20 @@ require 'vitals/reporters/dns_resolving_statsd_reporter'
 
 require 'vitals/formats/production_format'
 require 'vitals/formats/host_last_format'
+require 'vitals/formats/minimal_format'
 
 
 module Vitals
+
   def self.configure!
     @config = Configuration.new
     yield(@config) if block_given?
     @reporter = @config.reporter
     @reporter.format = @config.build_format
+  end
+
+  def self.configuration
+    @config
   end
 
   def self.reporter=(r)
