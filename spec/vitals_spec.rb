@@ -64,5 +64,25 @@ describe Vitals do
       end
     end
   end
+
+  describe ".configuration" do
+    it 'exposes the configuration' do
+      reporter = Vitals::Reporters::ConsoleReporter.new
+
+      Vitals.configure! do |c|
+        c.environment = 'env'
+        c.facility = 'svc'
+        c.host = 'foohost'
+        c.reporter = reporter
+        c.format = Vitals::Formats::HostLastFormat
+      end
+
+      Vitals.configuration.environment.must_equal('env')
+      Vitals.configuration.facility.must_equal('svc')
+      Vitals.configuration.host.must_equal('foohost')
+      Vitals.configuration.reporter.must_equal(reporter)
+      Vitals.configuration.format.must_equal(Vitals::Formats::HostLastFormat)
+    end
+  end
 end
 
