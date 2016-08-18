@@ -15,6 +15,10 @@ module Vitals::Reporters
       @reporters.each{|r| r.gauge(m, v) }
     end
 
+    def count(m, v)
+      @reporters.each{|r| r.count(m, v) }
+    end
+
     def timing(m, v)
       @reporters.each{|r| r.timing(m, v) }
     end

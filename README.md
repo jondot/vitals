@@ -97,6 +97,8 @@ You can emit metrics from anywhere:
 ```ruby
 Vitals.inc('my_metric')
 
+Vitals.count('my_metric', 17)
+
 Vitals.gauge('my_metric', 42)
 
 Vitals.timing('my_metric', 500) # milliseconds

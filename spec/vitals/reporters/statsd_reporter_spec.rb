@@ -12,6 +12,11 @@ describe Vitals::Reporters::StatsdReporter do
     reporter.inc('1.2')
   end
 
+  it '#count' do
+    mock(reporter.statsd).count('1.2', 32).times(1)
+    reporter.count('1.2', 32)
+  end
+
   it '#timing' do
     mock(reporter.statsd).timing('1.2', 42).times(1)
     reporter.timing('1.2', 42)
@@ -22,4 +27,3 @@ describe Vitals::Reporters::StatsdReporter do
     reporter.gauge('1.2', 32)
   end
 end
-

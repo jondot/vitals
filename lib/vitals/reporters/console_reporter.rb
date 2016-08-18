@@ -16,6 +16,10 @@ module Vitals::Reporters
       print "#{@category} GAUGE #{self.format.format(m)} #{v}"
     end
 
+    def count(m, v)
+      print "#{@category} COUNT #{self.format.format(m)} #{v}"
+    end
+
     def timing(m, v)
       print "#{@category} TIME #{self.format.format(m)} #{v}"
     end

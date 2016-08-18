@@ -59,6 +59,10 @@ module Vitals
     reporter.timing(m, val)
   end
 
+  def self.count(m, val)
+    reporter.count(m, val)
+  end
+
   def self.gauge(m, val)
     reporter.gauge(m, val)
   end

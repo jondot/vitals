@@ -17,6 +17,9 @@ describe Vitals do
 
       mock(Vitals.reporter).gauge("foo.bar", 42).times(1)
       Vitals.gauge("foo.bar", 42)
+
+      mock(Vitals.reporter).count("foo.bar", 42).times(1)
+      Vitals.count("foo.bar", 42)
     end
   end
 

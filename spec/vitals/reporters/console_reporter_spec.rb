@@ -17,4 +17,9 @@ describe Vitals::Reporters::ConsoleReporter do
     out, _ = capture_io{ reporter.gauge('1.2', 32) }
     out.must_equal("main GAUGE 1.2 32\n")
   end
+
+  it '#count' do
+    out, _ = capture_io{ reporter.count('1.2', 32) }
+    out.must_equal("main COUNT 1.2 32\n")
+  end
 end

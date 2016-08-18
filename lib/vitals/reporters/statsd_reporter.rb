@@ -18,10 +18,12 @@ module Vitals::Reporters
       @statsd.gauge(format.format(m), v)
     end
 
+    def count(m, v)
+      @statsd.count(format.format(m), v)
+    end
+
     def timing(m, v)
       @statsd.timing(format.format(m), v)
     end
   end
 end
-
-
