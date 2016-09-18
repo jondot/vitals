@@ -30,6 +30,15 @@ describe Vitals::Integrations::Notifications::Grape do
         format :json
         prefix :api
 
+        rescue_from :all do |e|
+          error!({ error: 'Server error.' }, 500, { 'Content-Type' => 'text/error' })
+        end
+
+        get :make_error do
+          #error! "foobar"
+          raise StandardError.new("Oh noes!")
+        end
+
         resource :statuses do
           get :public_timeline do
             sleep 0.1
@@ -48,6 +57,13 @@ describe Vitals::Integrations::Notifications::Grape do
         end
       end
     end
+    it 'handles grape errors' do
+      get '/api/v1/make_error'
+      last_response.ok?.must_equal(false)
+      last_response.status.must_equal 500
+      reporter.reports.count.must_equal 1
+    end
+
     it 'handles grape\'s http_basic middleware' do
       get '/api/v1/auth/secret'
       last_response.ok?.must_equal(false)
