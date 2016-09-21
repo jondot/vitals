@@ -35,7 +35,6 @@ describe Vitals::Integrations::Notifications::Grape do
         end
 
         get :make_error do
-          #error! "foobar"
           raise StandardError.new("Oh noes!")
         end
 
@@ -61,7 +60,10 @@ describe Vitals::Integrations::Notifications::Grape do
       get '/api/v1/make_error'
       last_response.ok?.must_equal(false)
       last_response.status.must_equal 500
-      reporter.reports.count.must_equal 1
+
+      reporter.reports.count.must_equal(1)
+      report = reporter.reports[0]
+      report[:timing].must_equal('grape.api.v1.make_error.get.500.all')
     end
 
     it 'handles grape\'s http_basic middleware' do
