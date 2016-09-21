@@ -30,13 +30,16 @@ describe Vitals::Integrations::Notifications::Grape do
         format :json
         prefix :api
 
-        rescue_from :all do |e|
-          error!({ error: 'Server error.' }, 500, { 'Content-Type' => 'text/error' })
+        rescue_from StandardError do |e|
+          error! "foobar"
+        end
+
+        get :raise_error do
+         raise StandardError.new("Oh noes!")
         end
 
         get :make_error do
-          #error! "foobar"
-          raise StandardError.new("Oh noes!")
+          error! "foobar"
         end
 
         resource :statuses do
@@ -57,10 +60,21 @@ describe Vitals::Integrations::Notifications::Grape do
         end
       end
     end
-    it 'handles grape errors' do
+
+    it 'handles grape errors via raise, catch all' do
+      get '/api/v1/raise_error'
+      last_response.ok?.must_equal(false)
+      last_response.status.must_equal 500
+      #this fails:
+      #reporter.reports[0][:timing].must_equal('grape.api.v1.raise_error.get.500.all')
+      reporter.reports.count.must_equal 1
+    end
+
+    it 'handles grape errors via error!' do
       get '/api/v1/make_error'
       last_response.ok?.must_equal(false)
       last_response.status.must_equal 500
+      reporter.reports[0][:timing].must_equal('grape.api.v1.make_error.get.500.all')
       reporter.reports.count.must_equal 1
     end
 
