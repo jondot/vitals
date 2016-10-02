@@ -36,7 +36,7 @@ module Vitals
     private
 
     def fetch_development
-      ENV["RACK_ENV"] || ENV["NODE_ENV"] || "development"
+      ENV["RACK_ENV"] || ENV["RAILS_ENV"] || ENV["NODE_ENV"] || "development"
     end
 
     def fetch_host
