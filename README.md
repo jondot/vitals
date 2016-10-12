@@ -121,7 +121,7 @@ and it revolves around 3 concepts:
 and `ConsoleReporter` in development. `ConsoleReporter` will spit out metrics to `stdout` as they come. You can also
 wire them _both_ with `MultiReporter`. Check the [specs](/spec/reporters) for how to do that.
 2. `Format` - takes the contextual information (host, service, environment) and your metric, and formats them in an
-order that makes sense for working with Graphite. You have the `ProductionFormat` and `HostLastFormat`.
+order that makes sense for working with Graphite. You have the `ProductionFormat`, `HostLastFormat` and `NoHostFormat`.
 3. `Integrations` - integrations hook things that we're able to instrument with Vitals. Check [integrations](/lib/vitals/integrations) for more.
 
 Here's what's available to you at configuration time:

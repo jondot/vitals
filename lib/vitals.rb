@@ -19,6 +19,7 @@ require 'vitals/reporters/dns_resolving_statsd_reporter'
 
 require 'vitals/formats/production_format'
 require 'vitals/formats/host_last_format'
+require 'vitals/formats/no_host_format'
 
 
 module Vitals
