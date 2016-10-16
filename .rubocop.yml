@@ -1,0 +1,39 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  TargetRubyVersion: 2.1
+  Exclude:
+    - 'integration/**/*'
+    - 'bin/**/*'
+    - 'Guardfile'
+Style/AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
+Lint/DefEndAlignment:
+  AutoCorrect: true
+Lint/EndAlignment:
+  AutoCorrect: true
+Style/SignalException:
+  EnforcedStyle: semantic
+Style/WordArray:
+  Enabled: false
+Style/BlockDelimiters:
+  EnforcedStyle: braces_for_chaining
+Style/DotPosition:
+  EnforcedStyle: leading
+Style/BracesAroundHashParameters:
+  Enabled: false
+Style/NumericLiterals:
+  MinDigits: 9
+Style/CaseIndentation:
+  IndentOneStep: true
+Style/SpecialGlobalVars:
+  Enabled: false
+Style/NumericPredicate:
+  EnforcedStyle: comparison
+Style/VariableNumber:
+  Enabled: false
+Style/RegexpLiteral:
+  Enabled: false
+Metrics/LineLength:
+  Max: 140

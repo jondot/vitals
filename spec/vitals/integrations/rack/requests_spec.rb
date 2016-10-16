@@ -9,7 +9,7 @@ require 'sinatra/base'
 #
 
 describe Vitals::Integrations::Rack::Requests do
-  let(:reporter){Vitals::Reporters::InmemReporter.new}
+  let(:reporter) { Vitals::Reporters::InmemReporter.new }
   before do
     reporter.flush
     Vitals.configure! do |c|
@@ -17,7 +17,7 @@ describe Vitals::Integrations::Rack::Requests do
     end
   end
 
-  describe "grape rack non-versioned api" do
+  describe 'grape rack non-versioned api' do
     include Rack::Test::Methods
     def app
       Class.new(Grape::API) do
@@ -25,16 +25,16 @@ describe Vitals::Integrations::Rack::Requests do
         resource :statuses do
           get :public_timeline do
             sleep 0.1
-            "hello world"
+            'hello world'
           end
         end
         resource :auth do
-          http_basic do |u,p|
+          http_basic do |_u, _p|
             false
           end
 
           get :secret do
-            "impossible to get here"
+            'impossible to get here'
           end
         end
       end
@@ -52,7 +52,7 @@ describe Vitals::Integrations::Rack::Requests do
     end
 
     it 'handles get' do
-      get "/statuses/public_timeline"
+      get '/statuses/public_timeline'
       last_response.ok?.must_equal(true)
 
       reporter.reports.count.must_equal(1)
@@ -70,7 +70,7 @@ describe Vitals::Integrations::Rack::Requests do
       end
 
       it 'handles get' do
-        get "/statuses/public_timeline"
+        get '/statuses/public_timeline'
         last_response.ok?.must_equal(true)
 
         reporter.reports.count.must_equal(1)
@@ -81,7 +81,7 @@ describe Vitals::Integrations::Rack::Requests do
     end
   end
 
-  describe "grape rack versioned api" do
+  describe 'grape rack versioned api' do
     include Rack::Test::Methods
     def app
       Class.new(Grape::API) do
@@ -93,14 +93,14 @@ describe Vitals::Integrations::Rack::Requests do
         resource :statuses do
           get :public_timeline do
             sleep 0.1
-            "hello world"
+            'hello world'
           end
         end
       end
     end
 
     it 'handles get' do
-      get "/api/v1/statuses/public_timeline"
+      get '/api/v1/statuses/public_timeline'
       last_response.ok?.must_equal(true)
 
       reporter.reports.count.must_equal(1)
@@ -110,12 +110,12 @@ describe Vitals::Integrations::Rack::Requests do
     end
   end
 
-  describe "rack api request prefix" do
+  describe 'rack api request prefix' do
     include Rack::Test::Methods
     def app
       Class.new(Sinatra::Base) do
         use(Class.new do
-          def initialize(app, options={})
+          def initialize(app, _options = {})
             @app = app
           end
 
@@ -127,9 +127,8 @@ describe Vitals::Integrations::Rack::Requests do
         use Vitals::Integrations::Rack::Requests
 
         get '/foo/bar/baz' do
-          "hello get"
+          'hello get'
         end
-
       end
     end
 
@@ -143,14 +142,14 @@ describe Vitals::Integrations::Rack::Requests do
     end
   end
 
-  describe "sinatra wacky rack api" do
+  describe 'sinatra wacky rack api' do
     include Rack::Test::Methods
     def app
       Class.new(Sinatra::Base) do
         use Vitals::Integrations::Rack::Requests
 
         get '/' do
-          "hello get"
+          'hello get'
         end
       end
     end
@@ -165,7 +164,7 @@ describe Vitals::Integrations::Rack::Requests do
     end
   end
 
-  describe "sinatra rack api" do
+  describe 'sinatra rack api' do
     include Rack::Test::Methods
     def app
       Class.new(Sinatra::Base) do
@@ -173,17 +172,17 @@ describe Vitals::Integrations::Rack::Requests do
 
         get '/foo/bar/baz' do
           sleep 0.1
-          "hello get"
+          'hello get'
         end
 
         post '/foo/bar/:name' do
           sleep 0.1
-          "hello post"
+          'hello post'
         end
 
         post '/posts/:id/comments' do
           sleep 0.1
-          "posts"
+          'posts'
         end
       end
     end
@@ -219,4 +218,3 @@ describe Vitals::Integrations::Rack::Requests do
     end
   end
 end
-

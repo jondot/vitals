@@ -5,7 +5,7 @@ module Vitals::Reporters
     attr_accessor :format
     attr_reader :statsd
 
-    def initialize(host:'localhost', port:8125, format:nil)
+    def initialize(host: 'localhost', port: 8125, format: nil)
       @statsd = Statsd.new(host, port)
       @format = format
     end

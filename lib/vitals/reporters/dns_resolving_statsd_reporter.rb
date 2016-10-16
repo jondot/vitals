@@ -11,18 +11,17 @@ module Vitals::Reporters
     end
 
     private
+
     def setup_statsd
       ip = @host
-      unless (@host =~ Resolv::AddressRegex || @host == 'localhost'.freeze)
+      unless @host =~ Resolv::AddressRegex || @host == 'localhost'.freeze
         ip, ttl = query_dns
         Thread.new do
-          while true do
+          loop do
             sleep ttl
             previous_ip = ip
             ip, ttl = query_dns
-            if ip != previous_ip
-              @statsd = Statsd.new(ip, @port)
-            end
+            @statsd = Statsd.new(ip, @port) if ip != previous_ip
           end
         end
       end
@@ -35,5 +34,3 @@ module Vitals::Reporters
     end
   end
 end
-
-

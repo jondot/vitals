@@ -13,11 +13,11 @@ require 'rack/test'
 require 'benchmark/ipsa'
 require 'memory_profiler'
 
-# TODO remember to set vitals config to nil
+# TODO: remember to set vitals config to nil
 # globally for the test suite so that we don't
 # have test fallout (Vitals is static)
 
-# TODO extract this pattern to a gem
+# TODO: extract this pattern to a gem
 def bench(label, cases)
   it "bench #{label}" do
     Benchmark.ipsa do |x|
@@ -32,46 +32,47 @@ def format_configs
   [
     {
       environment: 'env/foo-bar baz:qux',
-      facility: 'service/foo-bar baz:qux',
-      host: 'host/foo-bar baz:qux'
+      facility:    'service/foo-bar baz:qux',
+      host:        'host/foo-bar baz:qux'
     },
     {
       environment: 'env',
-      facility: 'service',
-      host: 'host'
+      facility:    'service',
+      host:        'host'
     },
     {
       environment: 'env',
-      facility: nil,
-      host: 'host'
+      facility:    nil,
+      host:        'host'
     },
     {
       environment: 'env',
-      facility: 'service',
-      host: nil
+      facility:    'service',
+      host:        nil
     },
     {
       environment: nil,
-      facility: 'service',
-      host: 'host'
+      facility:    'service',
+      host:        'host'
     },
     {
       environment: 'env',
-      facility: nil,
-      host: nil
+      facility:    nil,
+      host:        nil
     },
     {
       environment: nil,
-      facility: nil,
-      host: 'host'
+      facility:    nil,
+      host:        'host'
     },
     {
       environment: nil,
-      facility: 'service',
-      host: nil
+      facility:    'service',
+      host:        nil
     }
   ]
 end
+
 def format_cases
   ['1.2',
    '1',
@@ -101,6 +102,4 @@ class TestFormat
   end
 end
 
-
 require 'grape'
-

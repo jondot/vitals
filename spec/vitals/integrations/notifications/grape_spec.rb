@@ -9,7 +9,7 @@ require 'grape'
 #
 
 describe Vitals::Integrations::Notifications::Grape do
-  let(:reporter){Vitals::Reporters::InmemReporter.new}
+  let(:reporter) { Vitals::Reporters::InmemReporter.new }
   before do
     reporter.flush
     Vitals.configure! do |c|
@@ -22,7 +22,7 @@ describe Vitals::Integrations::Notifications::Grape do
     ActiveSupport::Notifications.unsubscribe(@sub)
   end
 
-  describe "grape notifications api" do
+  describe 'grape notifications api' do
     include Rack::Test::Methods
     def app
       Class.new(Grape::API) do
@@ -30,32 +30,32 @@ describe Vitals::Integrations::Notifications::Grape do
         format :json
         prefix :api
 
-        rescue_from StandardError do |e|
-          error! "foobar"
+        rescue_from StandardError do |_e|
+          error! 'foobar'
         end
 
         get :raise_error do
-         raise StandardError.new("Oh noes!")
+          fail StandardError, 'Oh noes!'
         end
 
         get :make_error do
-          error! "foobar"
+          error! 'foobar'
         end
 
         resource :statuses do
           get :public_timeline do
             sleep 0.1
-            "hello world"
+            'hello world'
           end
         end
 
         resource :auth do
-          http_basic do |u,p|
+          http_basic do |_u, _p|
             false
           end
 
           get :secret do
-            "impossible to get here"
+            'impossible to get here'
           end
         end
       end
@@ -65,8 +65,8 @@ describe Vitals::Integrations::Notifications::Grape do
       get '/api/v1/raise_error'
       last_response.ok?.must_equal(false)
       last_response.status.must_equal 500
-      #this fails:
-      #reporter.reports[0][:timing].must_equal('grape.api.v1.raise_error.get.500.all')
+      # this fails:
+      # reporter.reports[0][:timing].must_equal('grape.api.v1.raise_error.get.500.all')
       reporter.reports.count.must_equal 1
     end
 
@@ -87,7 +87,7 @@ describe Vitals::Integrations::Notifications::Grape do
     end
 
     it 'handles prefix, version and format' do
-      get "/api/v1/statuses/public_timeline"
+      get '/api/v1/statuses/public_timeline'
       last_response.ok?.must_equal(true)
 
       reporter.reports.count.must_equal(1)
@@ -105,7 +105,7 @@ describe Vitals::Integrations::Notifications::Grape do
       end
 
       it 'handles prefix, version and format' do
-        get "/api/v1/statuses/public_timeline"
+        get '/api/v1/statuses/public_timeline'
         last_response.ok?.must_equal(true)
 
         reporter.reports.count.must_equal(1)
@@ -114,10 +114,9 @@ describe Vitals::Integrations::Notifications::Grape do
         report[:val].must_be_within_delta(100, 40)
       end
     end
-      
   end
 
-  describe "grape nonversioned notifications api" do
+  describe 'grape nonversioned notifications api' do
     include Rack::Test::Methods
     def app
       Class.new(Grape::API) do
@@ -125,14 +124,14 @@ describe Vitals::Integrations::Notifications::Grape do
         resource :statuses do
           get :public_timeline do
             sleep 0.1
-            "hello world"
+            'hello world'
           end
         end
       end
     end
 
     it 'handles default api' do
-      get "/statuses/public_timeline"
+      get '/statuses/public_timeline'
       last_response.ok?.must_equal(true)
       reporter.reports.count.must_equal(1)
       report = reporter.reports[0]

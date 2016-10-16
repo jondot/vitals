@@ -1,9 +1,9 @@
-require "vitals/version"
+require 'vitals/version'
 module Vitals
-  module Formats;end
-  module Reporters;end
+  module Formats; end
+  module Reporters; end
   module Integrations
-    module Notifications;end
+    module Notifications; end
   end
 end
 
@@ -20,7 +20,6 @@ require 'vitals/reporters/dns_resolving_statsd_reporter'
 require 'vitals/formats/production_format'
 require 'vitals/formats/host_last_format'
 require 'vitals/formats/no_host_format'
-
 
 module Vitals
   def self.configure!
@@ -41,7 +40,7 @@ module Vitals
   def self.subscribe!(*modules)
     # give out a list of subscribers too
     modules.map do |mod|
-      require "vitals/integrations/notifications/#{ mod }"
+      require "vitals/integrations/notifications/#{mod}"
       klass = Object.const_get("Vitals::Integrations::Notifications::#{classify(mod)}")
       klass.subscribe!
     end
@@ -68,8 +67,11 @@ module Vitals
     reporter.gauge(m, val)
   end
 
-  private
-  def self.classify(sym)
-    sym.to_s.split('_').collect!{ |w| w.capitalize }.join
+  class << self
+    private
+
+    def classify(sym)
+      sym.to_s.split('_').collect!(&:capitalize).join
+    end
   end
 end

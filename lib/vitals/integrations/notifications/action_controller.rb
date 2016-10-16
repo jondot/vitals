@@ -6,21 +6,21 @@ module Vitals::Integrations::Notifications
       'process_action.action_controller'
     end
 
-    private
+    class << self
+      private
 
-    def self.handle(name, started, finished, unique_id, payload)
-      method  = payload[:method].downcase
-      status  = payload[:status]
-      action  = payload[:action]
-      ctrl    = payload[:controller].sub(/Controller$/, '').downcase
-      # format  = payload[:format]
+     def handle(_name, started, finished, _unique_id, payload)
+       method  = payload[:method].downcase
+       status  = payload[:status]
+       action  = payload[:action]
+       ctrl    = payload[:controller].sub(/Controller$/, '').downcase
+       # format  = payload[:format]
 
-      m = "controllers.#{ctrl}_#{action}.#{method}.#{status}"
-      Vitals.timing("#{m}.all", duration(started, finished))
-      Vitals.timing("#{m}.db", payload[:db_runtime]) if payload[:db_runtime]
-      Vitals.timing("#{m}.view", payload[:view_runtime]) if payload[:view_runtime]
+       m = "controllers.#{ctrl}_#{action}.#{method}.#{status}"
+       Vitals.timing("#{m}.all", duration(started, finished))
+       Vitals.timing("#{m}.db", payload[:db_runtime]) if payload[:db_runtime]
+       Vitals.timing("#{m}.view", payload[:view_runtime]) if payload[:view_runtime]
+     end
     end
-
   end
 end
-

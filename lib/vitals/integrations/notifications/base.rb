@@ -9,7 +9,7 @@ module Vitals::Integrations::Notifications
     end
 
     def self.handle
-      raise "#handle not implemented"
+      fail '#handle not implemented'
     end
 
     def self.duration(started, finished)
@@ -17,4 +17,3 @@ module Vitals::Integrations::Notifications
     end
   end
 end
-

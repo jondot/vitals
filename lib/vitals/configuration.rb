@@ -8,7 +8,7 @@ module Vitals
 
     def initialize
       @environment = fetch_development
-      @facility = "default"
+      @facility = 'default'
       @host = fetch_host
       @reporter = Vitals::Reporters::InmemReporter.new
       @format = Vitals::Formats::ProductionFormat
@@ -27,16 +27,16 @@ module Vitals
 
     def build_format
       @format.new(
-        environment: self.environment,
-        facility: self.facility,
-        host: self.host
+        environment: environment,
+        facility:    facility,
+        host:        host
       )
     end
 
     private
 
     def fetch_development
-      ENV["RACK_ENV"] || ENV["RAILS_ENV"] || ENV["NODE_ENV"] || "development"
+      ENV['RACK_ENV'] || ENV['RAILS_ENV'] || ENV['NODE_ENV'] || 'development'
     end
 
     def fetch_host

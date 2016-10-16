@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Vitals::Reporters::DnsResolvingStatsdReporter do
-
   it 'successfully creates a statsd object when using localhost' do
     reporter = Vitals::Reporters::DnsResolvingStatsdReporter.new(host: 'localhost', port: 8125, format: TestFormat.new)
 
@@ -15,8 +14,8 @@ describe Vitals::Reporters::DnsResolvingStatsdReporter do
   end
 
   describe 'with domain name' do
-    FIRST_QUERY_RESULT = '10.0.0.1'
-    SUBSEQUENT_QUERY_RESULT = '10.0.0.2'
+    FIRST_QUERY_RESULT = '10.0.0.1'.freeze
+    SUBSEQUENT_QUERY_RESULT = '10.0.0.2'.freeze
 
     class StatsdMockDns < Vitals::Reporters::DnsResolvingStatsdReporter
       def query_dns
@@ -34,7 +33,7 @@ describe Vitals::Reporters::DnsResolvingStatsdReporter do
 
     it 'creates new statsd object when DNS query changes' do
       old_statsd_obj = reporter.statsd
-      sleep 1.5 #enough to make the first tick of the sleep happen
+      sleep 1.5 # enough to make the first tick of the sleep happen
 
       assert_equal reporter.statsd.host, SUBSEQUENT_QUERY_RESULT
       assert old_statsd_obj.object_id != reporter.statsd.object_id
@@ -42,11 +41,10 @@ describe Vitals::Reporters::DnsResolvingStatsdReporter do
 
     it "doesn't create new statsd object with each TTL if no changes" do
       reporter.statsd
-      sleep 1.5 #enough to make the first tick of the sleep happen
+      sleep 1.5 # enough to make the first tick of the sleep happen
       old_statsd_obj = reporter.statsd
       sleep 1
       assert_equal reporter.statsd.object_id, old_statsd_obj.object_id
     end
   end
 end
-

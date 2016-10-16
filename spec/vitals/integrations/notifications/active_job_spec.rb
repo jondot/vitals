@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'vitals/integrations/notifications/active_job'
 
 describe Vitals::Integrations::Notifications::ActiveJob do
-  let(:reporter){Vitals::Reporters::InmemReporter.new}
+  let(:reporter) { Vitals::Reporters::InmemReporter.new }
   before do
     reporter.flush
     Vitals.configure! do |c|
@@ -13,7 +13,7 @@ describe Vitals::Integrations::Notifications::ActiveJob do
   after do
     ActiveSupport::Notifications.unsubscribe(@sub)
   end
-  
+
   it 'handle notifications' do
     class FooBarWorker
       def queue_name
@@ -29,7 +29,7 @@ describe Vitals::Integrations::Notifications::ActiveJob do
 
     ActiveSupport::Notifications.instrument('perform.active_job',
                                             {
-                                              job: FooBarWorker.new,
+                                              job: FooBarWorker.new
                                             }) do
                                               sleep 0.1
                                             end
@@ -39,10 +39,10 @@ describe Vitals::Integrations::Notifications::ActiveJob do
     report[:timing].must_equal('jobs.foobarqueue_workers.foobar')
     report[:val].must_be_within_delta(100, 50)
     reporter.flush
-    
+
     ActiveSupport::Notifications.instrument('perform.active_job',
                                             {
-                                              job: FooBarJob.new,
+                                              job: FooBarJob.new
                                             }) do
                                               sleep 0.1
                                             end
@@ -53,4 +53,3 @@ describe Vitals::Integrations::Notifications::ActiveJob do
     report[:val].must_be_within_delta(100, 50)
   end
 end
-

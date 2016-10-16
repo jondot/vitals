@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe Vitals::Reporters::StatsdReporter do
-  let(:reporter){ Vitals::Reporters::StatsdReporter.new(host: 'localhost', port: 8125, format: TestFormat.new) }
+  let(:reporter) { Vitals::Reporters::StatsdReporter.new(host: 'localhost', port: 8125, format: TestFormat.new) }
 
   it 'should set up statsd' do
-    skip("implement")
+    skip('implement')
   end
 
   it '#inc' do

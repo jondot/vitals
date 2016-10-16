@@ -7,12 +7,17 @@ module Vitals::Integrations::Notifications
       'perform.active_job'
     end
 
-  private
-    def self.handle(name, started, finished, unique_id, payload)
-      job  = payload[:job]
-      name = job.class.name.sub(/Job$/, '').sub(/Worker$/,'').downcase
+    private
 
-      Vitals.timing("jobs.#{job.queue_name}.#{name}", duration(started, finished))
-    end
+    class << self
+      private
+
+        def handle(name, started, finished, _unique_id, payload)
+          job  = payload[:job]
+          name = job.class.name.sub(/Job$/, '').sub(/Worker$/, '').downcase
+
+          Vitals.timing("jobs.#{job.queue_name}.#{name}", duration(started, finished))
+        end
+      end
   end
 end
