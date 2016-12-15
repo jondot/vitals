@@ -15,6 +15,9 @@ describe Vitals do
       mock(Vitals.reporter).timing("foo.bar", 42).times(1)
       Vitals.timing("foo.bar", 42)
 
+      mock(Vitals.reporter).time("foo.bar")
+      Vitals.time("foo.bar"){  }
+
       mock(Vitals.reporter).gauge("foo.bar", 42).times(1)
       Vitals.gauge("foo.bar", 42)
 

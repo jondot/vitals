@@ -60,6 +60,10 @@ module Vitals
     reporter.timing(m, val)
   end
 
+  def self.time(m, &b)
+    reporter.time(m, &b)
+  end
+
   def self.count(m, val)
     reporter.count(m, val)
   end
