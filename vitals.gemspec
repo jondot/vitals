@@ -39,7 +39,7 @@ Gem::Specification.new do |spec|
   # we should test many versions of rails, grape, and so on with the same
   # set of integration tests
   # for now, we keep latest versions
-  spec.add_development_dependency "grape", "~> 0.15.0"
+  spec.add_development_dependency "grape", "~> 0.18.0"
   spec.add_development_dependency "activesupport", "~> 4.2.6"
   spec.add_development_dependency "sinatra", "~> 1.4.7"
   spec.add_development_dependency "byebug", "~> 8.2.2"

@@ -9,9 +9,10 @@ module Vitals::Integrations::Notifications
     private
 
     def self.handle(name, started, finished, unique_id, payload)
-      endpoint = payload[:endpoint]
-      route    = endpoint.route
-      method   = route.route_method.downcase
+      endpoint       = payload[:endpoint]
+      route          = endpoint.route
+      request_method = route.respond_to?(:request_method) ? route.request_method : route.route_method
+      method         = request_method.downcase
 
       path = Vitals::Utils.grape_path(route)
 
