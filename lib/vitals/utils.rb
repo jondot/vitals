@@ -13,8 +13,16 @@ module Vitals
     end
     # XXX grape specific, move this away some day?
     def self.grape_path(route)
-      version = route.route_version
-      path = route.route_path.dup[1..-1]          # /foo/bar/baz -> foo/bar/baz
+      if route.respond_to?(:version) && route.respond_to?(:path)
+        version = route.version
+        path    = route.path
+      else
+        # deprecated methods
+        version = route.route_version
+        path    = route.route_path
+      end
+      
+      path = path.dup[1..-1]          # /foo/bar/baz -> foo/bar/baz
       path.sub!(/\(\..*\)$/, '')                  # (.json) -> ''
       path.sub!(":version", version) if version   # :version -> v1
       path.gsub!(/\//, self.path_sep)     # foo/bar -> foo.bar
