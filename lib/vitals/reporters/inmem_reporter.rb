@@ -19,6 +19,10 @@ module Vitals::Reporters
       @reports << { :gauge => n( m ), :val => v }
     end
 
+    def count(m, v)
+      @reports << { :count => n( m ), :val => v }
+    end
+
     def timing(m, v)
       @reports << { :timing => n( m ), :val => v }
     end
