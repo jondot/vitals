@@ -32,9 +32,9 @@ class VitalsFlowTest < ActionDispatch::IntegrationTest
   test "get posts with rack middleware" do
     get '/posts'
     metrics = %w{
-      controllers.posts_index.get.200.all
-      controllers.posts_index.get.200.db
-      controllers.posts_index.get.200.view
+      controllers.posts.index.get.200.all
+      controllers.posts.index.get.200.db
+      controllers.posts.index.get.200.view
       requests.posts_index.get.200
     }
 
@@ -49,9 +49,9 @@ class VitalsFlowTest < ActionDispatch::IntegrationTest
 
     metrics = %w{
       jobs.default.foobarcleanup
-      controllers.posts_new.get.200.all
-      controllers.posts_new.get.200.db
-      controllers.posts_new.get.200.view
+      controllers.posts.new.get.200.all
+      controllers.posts.new.get.200.db
+      controllers.posts.new.get.200.view
       requests.posts_new.get.200
     }
 
@@ -66,9 +66,9 @@ class VitalsFlowTest < ActionDispatch::IntegrationTest
     get '/posts'
 
     metrics = %w{
-      controllers.posts_index.get.200.all
-      controllers.posts_index.get.200.db
-      controllers.posts_index.get.200.view
+      controllers.posts.index.get.200.all
+      controllers.posts.index.get.200.db
+      controllers.posts.index.get.200.view
       requests.posts_index.get.200
     }
 
@@ -82,8 +82,8 @@ class VitalsFlowTest < ActionDispatch::IntegrationTest
     post '/posts', post: { title: 'foobar'}
 
     metrics = %w{
-      controllers.posts_create.post.302.all
-      controllers.posts_create.post.302.db
+      controllers.posts.create.post.302.all
+      controllers.posts.create.post.302.db
       requests.posts_create.post.302
     }
 

@@ -15,7 +15,7 @@ module Vitals::Integrations::Notifications
       ctrl    = payload[:controller].sub(/Controller$/, '').downcase
       # format  = payload[:format]
 
-      m = "controllers.#{ctrl}_#{action}.#{method}.#{status}"
+      m = "controllers.#{ctrl}.#{action}.#{method}.#{status}"
       Vitals.timing("#{m}.all", duration(started, finished))
       Vitals.timing("#{m}.db", payload[:db_runtime]) if payload[:db_runtime]
       Vitals.timing("#{m}.view", payload[:view_runtime]) if payload[:view_runtime]
